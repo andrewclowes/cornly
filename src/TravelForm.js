@@ -3,7 +3,7 @@ import { useState } from 'react'
 export const TravelForm = () => {
   const [bagsOfCorn, setBagsOfCorn] = useState(0)
   const [costPerCrossing, setCostPerCrossing] = useState(0.25)
-  const [overallCost, setOverallCost] = useState(0)
+  const [overallCost, setOverallCost] = useState(null)
 
   const handleBagsOfCornChange = event => {
     const { value } = event.target
@@ -25,21 +25,23 @@ export const TravelForm = () => {
   }
 
   return (
-    <form>
-      <label>
-        Bags of corn:
-        <input type="text" name="corn" value={bagsOfCorn} onChange={handleBagsOfCornChange}/>
-      </label>
-      <br/>
-      <label>
-        Cost per crossing (£):
-        <input type="text" name="cost" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
-      </label>
-      <br/>
-      <button onClick={handleCalculateClick}>
+    <form role="form" className="form">
+      <div className="form-group mb-4">
+        <label htmlFor="bags-of-corn" className="control-label">Bags of corn:</label>
+        <input type="text" className="form-control" name="bags-of-corn" value={bagsOfCorn} onChange={handleBagsOfCornChange}/>
+      </div>
+      <div className="form-group mb-4">
+        <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
+        <input type="text" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
+      </div>
+      <button className="btn btn-primary mb-4" onClick={handleCalculateClick}>
         Calculate
       </button>
-      <p>£ {overallCost.toFixed(2)}</p>
+      {overallCost !== null &&
+        <div className="result">
+          <p className="cost">£ {overallCost.toFixed(2)}</p>
+        </div>
+      }
     </form>
   )
 }

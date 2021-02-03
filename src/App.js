@@ -1,12 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
 import { TravelForm } from './TravelForm'
+import logo from './logo.png'
 
 function App() {
   return (
     <div className="App">
-      <h1>Cornly</h1>
-      <TravelForm/>
+      <img className="logo" src={logo} alt="Logo"/>
+      {/* <h1>Cornly</h1> */}
+      <div className="form-container">
+        <TravelForm/>
+      </div>
     </div>
   );
 }

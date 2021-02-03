@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the logo', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Cornly/i);
+  const linkElement = screen.getByAltText(/Logo/i);
   expect(linkElement).toBeInTheDocument();
 });
