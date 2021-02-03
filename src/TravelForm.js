@@ -1,13 +1,25 @@
 import { useState } from 'react'
+import { Step } from './Step'
+import { generateJourney } from './journey'
+import { calculateCost } from './cost'
 
 export const TravelForm = () => {
-  const [bagsOfCorn, setBagsOfCorn] = useState(0)
+  const [numberOfCorn, setNumberOfCorn] = useState(0)
+  const [numberOfGeese, setNumberOfGeese] = useState(0)
   const [costPerCrossing, setCostPerCrossing] = useState(0.25)
+
   const [overallCost, setOverallCost] = useState(null)
+  const [journey, setJourney] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleBagsOfCornChange = event => {
     const { value } = event.target
-    setBagsOfCorn(Math.round(value))
+    setNumberOfCorn(Math.round(value))
+  }
+
+  const handleNumberOfGeeseChange = event => {
+    const { value } = event.target
+    setNumberOfGeese(Math.round(value))
   }
 
   const handleCostPerCrossingChange = event => {
@@ -20,15 +32,32 @@ export const TravelForm = () => {
       event.preventDefault();
     }
 
-    const total = bagsOfCorn * costPerCrossing * 2
+    const journey = generateJourney({
+      cornCount: numberOfCorn,
+      gooseCount: numberOfGeese
+    })
+    if (!journey) {
+      setOverallCost(null)
+      setJourney(null)
+      setErrorMessage('Journey is not possible')
+      return
+    }
+
+    const total = calculateCost(journey.length, costPerCrossing)
     setOverallCost(total)
+    setJourney(journey)
+    setErrorMessage(null)
   }
 
   return (
-    <form role="form" className="form">
+    <form className="form">
       <div className="form-group mb-4">
-        <label htmlFor="bags-of-corn" className="control-label">Bags of corn:</label>
-        <input type="text" pattern="\d*" className="form-control" name="bags-of-corn" value={bagsOfCorn} onChange={handleBagsOfCornChange}/>
+        <label htmlFor="number-of-corn" className="control-label">Bags of corn:</label>
+        <input type="text" pattern="\d*" className="form-control" name="number-of-corn" value={numberOfCorn} onChange={handleBagsOfCornChange}/>
+      </div>
+      <div className="form-group mb-4">
+        <label htmlFor="number-of-geese" className="control-label">Number of geese:</label>
+        <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
       </div>
       <div className="form-group mb-4">
         <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
@@ -41,6 +70,13 @@ export const TravelForm = () => {
         <div className="result">
           <p className="cost">£ {overallCost.toFixed(2)}</p>
         </div>
+      }
+      {
+        journey &&
+        journey.map((cargo, idx) => <Step index={idx} cargo={cargo} />)
+      }
+      {
+        <div>{errorMessage}</div>
       }
     </form>
   )
