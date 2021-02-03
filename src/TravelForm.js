@@ -7,7 +7,7 @@ export const TravelForm = () => {
 
   const handleBagsOfCornChange = event => {
     const { value } = event.target
-    setBagsOfCorn(value)
+    setBagsOfCorn(Math.round(value))
   }
 
   const handleCostPerCrossingChange = event => {
@@ -28,11 +28,11 @@ export const TravelForm = () => {
     <form role="form" className="form">
       <div className="form-group mb-4">
         <label htmlFor="bags-of-corn" className="control-label">Bags of corn:</label>
-        <input type="text" className="form-control" name="bags-of-corn" value={bagsOfCorn} onChange={handleBagsOfCornChange}/>
+        <input type="text" pattern="\d*" className="form-control" name="bags-of-corn" value={bagsOfCorn} onChange={handleBagsOfCornChange}/>
       </div>
       <div className="form-group mb-4">
         <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
-        <input type="text" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
+        <input type="number" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
       </div>
       <button className="btn btn-primary mb-4" onClick={handleCalculateClick}>
         Calculate
