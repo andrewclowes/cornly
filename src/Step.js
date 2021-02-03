@@ -1,8 +1,9 @@
 export const Step = ({ index, cargo }) => (
-  <div className="container">
-    <div className="row">
-      <p className="col">{index % 2 === 0 ? 'To market' : 'To farm'}</p>
-      <p className="col">{cargo}</p>
+  <div>
+    <div className="cargo">{cargo}</div>
+    <div className="arrow">
+      <div className="line"></div>
+      <div className={(index % 2 === 0 ? 'left': 'right') + '-point'}></div>
     </div>
   </div>
 )

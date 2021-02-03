@@ -50,7 +50,7 @@ export const TravelForm = () => {
   }
 
   return (
-    <form className="form">
+    <form className="form travel-form">
       <div className="form-group mb-4">
         <label htmlFor="number-of-corn" className="control-label">Bags of corn:</label>
         <input type="text" pattern="\d*" className="form-control" name="number-of-corn" value={numberOfCorn} onChange={handleBagsOfCornChange}/>
@@ -67,10 +67,16 @@ export const TravelForm = () => {
         Calculate
       </button>
       <div className="result">
-        {overallCost !== null && <p className="cost">£ {overallCost.toFixed(2)}</p>}
-        {journey && <Steps journey={journey} />}
+        {overallCost !== null && <>
+          <div className="mt-3">Cost:</div>
+          <p className="cost">£ {overallCost.toFixed(2)}</p>
+        </>}
+        {journey && <>
+          <div className="mb-3">Steps:</div>
+          <Steps journey={journey} />
+        </>}
+        {errorMessage && <div>{errorMessage}</div>}
       </div>
-      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

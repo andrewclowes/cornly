@@ -22,6 +22,10 @@ code {
   justify-content: center;
 }
 
+.travel-form {
+  min-width: 250px;
+}
+
 .btn {
   background-color: #62a702;
   border-color: #62a702;
@@ -39,4 +43,48 @@ code {
 
 .result .cost {
   font-size: 50px;
+}
+
+.river {
+  background-color: #cbecfb;
+}
+
+.river .cargo {
+  margin-top: 30px;
+}
+
+.river .arrow {
+  width: 100%;
+}
+
+.river .line {
+  margin-top: 5px;
+  min-width: 100px;
+  background: black;
+  height: 2px;
+  float: left;
+}
+
+.river .left-point {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7.5px solid black;
+  float: right;
+  position: relative;
+  top: -6px;
+  left: 1px;
+}
+
+.river .right-point {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7.5px solid black;
+  float: left;
+  position: relative;
+  top: -6px;
+  left: -1px;
 }
