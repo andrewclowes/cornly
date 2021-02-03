@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Step } from './Step'
+import { Steps } from './Steps'
 import { generateJourney } from './journey'
 import { calculateCost } from './cost'
 
@@ -66,18 +66,11 @@ export const TravelForm = () => {
       <button className="btn btn-primary mb-4" onClick={handleCalculateClick}>
         Calculate
       </button>
-      {overallCost !== null &&
-        <div className="result">
-          <p className="cost">£ {overallCost.toFixed(2)}</p>
-        </div>
-      }
-      {
-        journey &&
-        journey.map((cargo, idx) => <Step index={idx} cargo={cargo} />)
-      }
-      {
-        <div>{errorMessage}</div>
-      }
+      <div className="result">
+        {overallCost !== null && <p className="cost">£ {overallCost.toFixed(2)}</p>}
+        {journey && <Steps journey={journey} />}
+      </div>
+      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

@@ -70,8 +70,7 @@ export const generateJourney = ({
   const result = []
   let previousCargo = Cargo.EMPTY
 
-  let count = 0
-  while(count++ < 10) {
+  while(true) {
     farm = unloadCargo(farm, previousCargo)
 
     // Journey
