@@ -1,13 +1,20 @@
 import { Cargo } from './cargo'
 
+const isNotBird = cargo => cargo !== Cargo.GOOSE && cargo !== Cargo.SWAN
+
 const chooseFarmCargo = ({
   cornCount,
   gooseCount,
+  swanCount,
   foxCount
 }, previousCargo) => {
-  if (previousCargo !== Cargo.GOOSE && gooseCount > 0 && (gooseCount <= cornCount || gooseCount <= foxCount || foxCount + cornCount === 0)) {
+  const birdCount = gooseCount + swanCount
+
+  if (isNotBird(previousCargo) && gooseCount > 0 && (birdCount <= cornCount || birdCount <= foxCount || foxCount + cornCount === 0)) {
     return Cargo.GOOSE
-  } else if (previousCargo !== Cargo.FOX && foxCount > 0 && (foxCount <= gooseCount || cornCount + gooseCount === 0)) {
+  } else if (isNotBird(previousCargo) && swanCount > 0 && (birdCount <= cornCount || birdCount <= foxCount || foxCount + cornCount === 0)) {
+    return Cargo.SWAN
+  } else if (previousCargo !== Cargo.FOX && foxCount > 0 && (foxCount <= birdCount || cornCount + birdCount === 0)) {
     return Cargo.FOX
   } else if (previousCargo !== Cargo.CORN && cornCount > 0) {
     return Cargo.CORN
@@ -19,13 +26,18 @@ const chooseFarmCargo = ({
 const chooseMarketCargo = ({
   cornCount,
   gooseCount,
+  swanCount,
   foxCount
 }, previousCargo) => {
-  if (previousCargo !== Cargo.GOOSE && gooseCount > 0 && (cornCount > 0 || foxCount > 0)) {
+  const birdCount = gooseCount + swanCount
+
+  if (isNotBird(previousCargo) && gooseCount > 0 && (cornCount > 0 || foxCount > 0)) {
     return Cargo.GOOSE
-  } else if (previousCargo !== Cargo.FOX && foxCount > 0 && gooseCount > 0) {
+  } else if (isNotBird(previousCargo) && swanCount > 0 && (cornCount > 0 || foxCount > 0)) {
+    return Cargo.SWAN
+  } else if (previousCargo !== Cargo.FOX && foxCount > 0 && birdCount > 0) {
     return Cargo.FOX
-  } else if (previousCargo !== Cargo.CORN && cornCount > 0 && gooseCount > 0) {
+  } else if (previousCargo !== Cargo.CORN && cornCount > 0 && birdCount > 0) {
     return Cargo.CORN
   }
 
@@ -35,6 +47,8 @@ const chooseMarketCargo = ({
 const loadCargo = (destination, cargo) => {
   if (cargo === Cargo.GOOSE) {
     return { ...destination, gooseCount: destination.gooseCount - 1 }
+  } else if (cargo === Cargo.SWAN) {
+    return { ...destination, swanCount: destination.swanCount - 1 }
   } else if (cargo === Cargo.CORN) {
     return { ...destination, cornCount: destination.cornCount - 1 }
   } else if (cargo === Cargo.FOX) {
@@ -47,6 +61,8 @@ const loadCargo = (destination, cargo) => {
 const unloadCargo = (destination, cargo) => {
   if (cargo === Cargo.GOOSE) {
     return { ...destination, gooseCount: destination.gooseCount + 1 }
+  } else if (cargo === Cargo.SWAN) {
+    return { ...destination, swanCount: destination.swanCount + 1 }
   } else if (cargo === Cargo.CORN) {
     return { ...destination, cornCount: destination.cornCount + 1 }
   } else if (cargo === Cargo.FOX) {
@@ -59,26 +75,29 @@ const unloadCargo = (destination, cargo) => {
 const isJourneyUnsuccessful = ({
   cornCount,
   gooseCount,
+  swanCount,
   foxCount
-}) => (cornCount > 0 && gooseCount > 0) || (gooseCount > 0 && foxCount > 0)
+}) => (cornCount > 0 && gooseCount + swanCount > 0) || (gooseCount + swanCount > 0 && foxCount > 0)
 
 const isJourneySuccessful = ({
   cornCount,
   gooseCount,
+  swanCount,
   foxCount
-}) => cornCount + gooseCount + foxCount === 0
+}) => cornCount + gooseCount + swanCount + foxCount === 0
 
 export const generateJourney = ({
   cornCount,
   gooseCount,
+  swanCount,
   foxCount
 }) => {
   if (cornCount > 0 && gooseCount > 0 && cornCount + gooseCount > 3) {
     return
   }
 
-  let farm = { cornCount, gooseCount, foxCount }
-  let market = { cornCount: 0, gooseCount: 0, foxCount: 0 }
+  let farm = { cornCount, gooseCount, swanCount, foxCount }
+  let market = { cornCount: 0, gooseCount: 0, swanCount: 0, foxCount: 0 }
 
   const result = []
   let previousCargo = Cargo.EMPTY

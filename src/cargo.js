@@ -2,5 +2,6 @@ export const Cargo = Object.freeze({
   EMPTY: 'empty 👨🏼‍🌾',
   CORN: 'corn 🌽',
   GOOSE: 'goose 🦆',
-  FOX: 'fox 🦊'
+  SWAN: 'swan 🦢',
+  FOX: 'fox 🦊',
 })

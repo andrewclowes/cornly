@@ -97,3 +97,11 @@ code {
   border-width: 2px;
   color: white;
 }
+
+.notice {
+  background-color: #d25d5d;
+  border-color: #8e1717;
+  border-radius: 5px;
+  border-width: 2px;
+  color: white;
+}

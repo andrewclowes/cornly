@@ -6,6 +6,7 @@ import { calculateCost } from './cost'
 export const TravelForm = () => {
   const [numberOfCorn, setNumberOfCorn] = useState(0)
   const [numberOfGeese, setNumberOfGeese] = useState(0)
+  const [numberOfSwans, setNumberOfSwans] = useState(0)
   const [numberOfFoxes, setNumberOfFoxes] = useState(0)
   const [costPerCrossing, setCostPerCrossing] = useState(0.25)
 
@@ -21,6 +22,11 @@ export const TravelForm = () => {
   const handleNumberOfGeeseChange = event => {
     const { value } = event.target
     setNumberOfGeese(Math.round(value))
+  }
+
+  const handleNumberOfSwansChange = event => {
+    const { value } = event.target
+    setNumberOfSwans(Math.round(value))
   }
 
   const handleNumberOfFoxesChange = event => {
@@ -41,6 +47,7 @@ export const TravelForm = () => {
     const journey = generateJourney({
       cornCount: numberOfCorn,
       gooseCount: numberOfGeese,
+      swanCount: numberOfSwans,
       foxCount: numberOfFoxes
     })
     if (!journey) {
@@ -68,12 +75,16 @@ export const TravelForm = () => {
           <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
         </div>
         <div className="form-group mb-4">
+          <label htmlFor="number-of-swans" className="control-label">Bevy of swans:</label>
+          <input type="text" pattern="\d*" className="form-control" name="number-of-swans" value={numberOfSwans} onChange={handleNumberOfSwansChange}/>
+        </div>
+        <div className="form-group mb-4">
           <label htmlFor="number-of-fox" className="control-label">Skulk of foxes:</label>
           <input type="text" pattern="\d*" className="form-control" name="number-of-fox" value={numberOfFoxes} onChange={handleNumberOfFoxesChange}/>
         </div>
         <div className="form-group mb-4">
           <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
-          <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}  disabled="disabled"/>
+          <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
         </div>
         <button className="btn btn-primary mb-2" onClick={handleCalculateClick}>
           Calculate
@@ -90,6 +101,8 @@ export const TravelForm = () => {
         </div>
       }
       {errorMessage && <div className="mt-3 p-4 error">{errorMessage}</div>}
+
+      <div className="mt-3 p-4 notice mb-3">Customer Notice : please do not travel between 8-10am and 4-6pm</div>
     </form>
   )
 }
