@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Steps } from './Steps'
 import { generateJourney } from './journey'
 import { calculateCost } from './cost'
+import { canTravel } from './time'
 
 export const TravelForm = () => {
   const [numberOfCorn, setNumberOfCorn] = useState(0)
@@ -9,6 +10,7 @@ export const TravelForm = () => {
   const [numberOfSwans, setNumberOfSwans] = useState(0)
   const [numberOfFoxes, setNumberOfFoxes] = useState(0)
   const [costPerCrossing, setCostPerCrossing] = useState(0.25)
+  const [travelTime, setTravelTime] = useState("07:00")
 
   const [overallCost, setOverallCost] = useState(null)
   const [journey, setJourney] = useState(null)
@@ -39,9 +41,21 @@ export const TravelForm = () => {
     setCostPerCrossing(value)
   }
 
+  const handleTravelTimeChange = event => {
+    const { value } = event.target
+    setTravelTime(value)
+  }
+
   const handleCalculateClick = event => {
     if (event) {
       event.preventDefault();
+    }
+
+    if (!canTravel(travelTime)) {
+      setOverallCost(null)
+      setJourney(null)
+      setErrorMessage('🚨 Customer Notice : please do not travel between 8-10am and 4-6pm ⏱ 🚨')
+      return
     }
 
     const journey = generateJourney({
@@ -53,7 +67,7 @@ export const TravelForm = () => {
     if (!journey) {
       setOverallCost(null)
       setJourney(null)
-      setErrorMessage('Journey is not possible, please retry')
+      setErrorMessage('🚨 Journey is not possible, please retry 🚨')
       return
     }
 
@@ -86,6 +100,10 @@ export const TravelForm = () => {
           <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
           <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
         </div>
+        <div className="form-group mb-4">
+          <label htmlFor="travel-time">Travel time (HH:mm):</label>
+          <input type="time" min="0" className="form-control" id="travel-time" value={travelTime} onChange={handleTravelTimeChange}/>
+        </div>
         <button className="btn btn-primary mb-2" onClick={handleCalculateClick}>
           Calculate
         </button>
@@ -101,8 +119,6 @@ export const TravelForm = () => {
         </div>
       }
       {errorMessage && <div className="mt-3 p-4 error">{errorMessage}</div>}
-
-      <div className="mt-3 p-4 notice mb-3">Customer Notice : please do not travel between 8-10am and 4-6pm</div>
-    </form>
+  </form>
   )
 }

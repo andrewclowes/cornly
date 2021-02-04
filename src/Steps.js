@@ -9,7 +9,7 @@ export const Steps = ({ journey }) =>
       </div>
       <div className="col river p-0">
         {
-          journey.map((cargo, idx) => <Step index={idx} cargo={cargo} />)
+          journey.map((cargo, idx) => <Step key={idx} index={idx} cargo={cargo} />)
         }
       </div>
       <div className="col d-flex justify-content-center align-items-center">
