@@ -6,6 +6,7 @@ import { calculateCost } from './cost'
 export const TravelForm = () => {
   const [numberOfCorn, setNumberOfCorn] = useState(0)
   const [numberOfGeese, setNumberOfGeese] = useState(0)
+  const [numberOfFoxes, setNumberOfFoxes] = useState(0)
   const [costPerCrossing, setCostPerCrossing] = useState(0.25)
 
   const [overallCost, setOverallCost] = useState(null)
@@ -22,6 +23,11 @@ export const TravelForm = () => {
     setNumberOfGeese(Math.round(value))
   }
 
+  const handleNumberOfFoxesChange = event => {
+    const { value } = event.target
+    setNumberOfFoxes(Math.round(value))
+  }
+
   const handleCostPerCrossingChange = event => {
     const { value } = event.target
     setCostPerCrossing(value)
@@ -34,7 +40,8 @@ export const TravelForm = () => {
 
     const journey = generateJourney({
       cornCount: numberOfCorn,
-      gooseCount: numberOfGeese
+      gooseCount: numberOfGeese,
+      foxCount: numberOfFoxes
     })
     if (!journey) {
       setOverallCost(null)
@@ -58,6 +65,10 @@ export const TravelForm = () => {
       <div className="form-group mb-4">
         <label htmlFor="number-of-geese" className="control-label">Number of geese:</label>
         <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
+      </div>
+      <div className="form-group mb-4">
+        <label htmlFor="number-of-fox" className="control-label">Number of foxes:</label>
+        <input type="text" pattern="\d*" className="form-control" name="number-of-fox" value={numberOfFoxes} onChange={handleNumberOfFoxesChange}/>
       </div>
       <div className="form-group mb-4">
         <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
