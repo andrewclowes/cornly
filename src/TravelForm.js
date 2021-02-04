@@ -58,36 +58,38 @@ export const TravelForm = () => {
 
   return (
     <form className="form travel-form">
-      <div className="form-group mb-4">
-        <label htmlFor="number-of-corn" className="control-label">Bags of corn:</label>
-        <input type="text" pattern="\d*" className="form-control" name="number-of-corn" value={numberOfCorn} onChange={handleBagsOfCornChange}/>
+      <div className="card p-2 mb-3">
+        <div className="form-group mb-4">
+          <label htmlFor="number-of-corn" className="control-label">Bags of corn:</label>
+          <input type="text" pattern="\d*" className="form-control" name="number-of-corn" value={numberOfCorn} onChange={handleBagsOfCornChange}/>
+        </div>
+        <div className="form-group mb-4">
+          <label htmlFor="number-of-geese" className="control-label">Gaggle of geese:</label>
+          <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
+        </div>
+        <div className="form-group mb-4">
+          <label htmlFor="number-of-fox" className="control-label">Skulk of foxes:</label>
+          <input type="text" pattern="\d*" className="form-control" name="number-of-fox" value={numberOfFoxes} onChange={handleNumberOfFoxesChange}/>
+        </div>
+        <div className="form-group mb-4">
+          <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
+          <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}  disabled="disabled"/>
+        </div>
+        <button className="btn btn-primary mb-2" onClick={handleCalculateClick}>
+          Calculate
+        </button>
       </div>
-      <div className="form-group mb-4">
-        <label htmlFor="number-of-geese" className="control-label">Gaggle of geese:</label>
-        <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
-      </div>
-      <div className="form-group mb-4">
-        <label htmlFor="number-of-fox" className="control-label">Skulk of foxes:</label>
-        <input type="text" pattern="\d*" className="form-control" name="number-of-fox" value={numberOfFoxes} onChange={handleNumberOfFoxesChange}/>
-      </div>
-      <div className="form-group mb-4">
-        <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
-        <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}  disabled="disabled"/>
-      </div>
-      <button className="btn btn-primary mb-4" onClick={handleCalculateClick}>
-        Calculate
-      </button>
-      <div className="result">
-        {overallCost !== null && <>
-          <div className="mt-3">Cost:</div>
+      {
+        overallCost !== null && journey &&
+        <div className="result card mb-3">
+          <div className="mt-3">Cost 💰:</div>
           <p className="cost">£{overallCost.toFixed(2)}</p>
-        </>}
-        {journey && <>
           <div className="mb-3">Steps 🚤:</div>
           <Steps journey={journey} />
-        </>}
-        {errorMessage && <div className="mt-3 p-4 error">{errorMessage}</div>}
-      </div>
+          <br/>
+        </div>
+      }
+      {errorMessage && <div className="mt-3 p-4 error">{errorMessage}</div>}
     </form>
   )
 }
