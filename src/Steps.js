@@ -5,6 +5,7 @@ export const Steps = ({ journey }) =>
     <div className="row">
       <div className="col d-flex justify-content-center align-items-center">
         Farm
+        <br/> 🚜🍂
       </div>
       <div className="col river p-0">
         {
@@ -13,6 +14,7 @@ export const Steps = ({ journey }) =>
       </div>
       <div className="col d-flex justify-content-center align-items-center">
         Market
+        <br/> 🏪📈
       </div>
     </div>
   </div>

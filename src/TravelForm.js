@@ -46,7 +46,7 @@ export const TravelForm = () => {
     if (!journey) {
       setOverallCost(null)
       setJourney(null)
-      setErrorMessage('Journey is not possible')
+      setErrorMessage('Journey is not possible, please retry')
       return
     }
 
@@ -63,16 +63,16 @@ export const TravelForm = () => {
         <input type="text" pattern="\d*" className="form-control" name="number-of-corn" value={numberOfCorn} onChange={handleBagsOfCornChange}/>
       </div>
       <div className="form-group mb-4">
-        <label htmlFor="number-of-geese" className="control-label">Number of geese:</label>
+        <label htmlFor="number-of-geese" className="control-label">Gaggle of geese:</label>
         <input type="text" pattern="\d*" className="form-control" name="number-of-geese" value={numberOfGeese} onChange={handleNumberOfGeeseChange}/>
       </div>
       <div className="form-group mb-4">
-        <label htmlFor="number-of-fox" className="control-label">Number of foxes:</label>
+        <label htmlFor="number-of-fox" className="control-label">Skulk of foxes:</label>
         <input type="text" pattern="\d*" className="form-control" name="number-of-fox" value={numberOfFoxes} onChange={handleNumberOfFoxesChange}/>
       </div>
       <div className="form-group mb-4">
         <label htmlFor="cost-per-crossing">Cost per crossing (£):</label>
-        <input type="number" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}/>
+        <input type="number" min="0" className="form-control" id="cost-per-crossing" value={costPerCrossing} onChange={handleCostPerCrossingChange}  disabled="disabled"/>
       </div>
       <button className="btn btn-primary mb-4" onClick={handleCalculateClick}>
         Calculate
@@ -80,13 +80,13 @@ export const TravelForm = () => {
       <div className="result">
         {overallCost !== null && <>
           <div className="mt-3">Cost:</div>
-          <p className="cost">£ {overallCost.toFixed(2)}</p>
+          <p className="cost">£{overallCost.toFixed(2)}</p>
         </>}
         {journey && <>
-          <div className="mb-3">Steps:</div>
+          <div className="mb-3">Steps 🚤:</div>
           <Steps journey={journey} />
         </>}
-        {errorMessage && <div>{errorMessage}</div>}
+        {errorMessage && <div className="mt-3 p-4 error">{errorMessage}</div>}
       </div>
     </form>
   )
